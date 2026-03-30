@@ -1,0 +1,3 @@
+pip install -r requirements.txt    # install networkx (likely already present)
+python test_csig.py                # run 26 tests — all pass
+python build_toy_csig.py           # build, save, reload, and query a toy graph
