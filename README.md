@@ -4,7 +4,7 @@
 
 ## Stage 1 — Minimal CSIG Foundation
 
-**Date:** 2026-03-26
+
 
 ### Overview
 
