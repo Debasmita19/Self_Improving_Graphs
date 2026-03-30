@@ -1,0 +1,201 @@
+{
+  "nodes": [
+    {
+      "node_id": "agent_v0",
+      "parent_id": null,
+      "timestamp": "2026-03-27T00:21:04.554963+00:00",
+      "task_name": "ehr_query",
+      "context_summary": {
+        "department": "cardiology",
+        "dataset": "mimic-iv",
+        "run": 1
+      },
+      "metrics": {
+        "accuracy": 0.62,
+        "execution_success": 0.7
+      },
+      "accepted": true
+    },
+    {
+      "node_id": "agent_v1",
+      "parent_id": "agent_v0",
+      "timestamp": "2026-03-27T00:21:04.554963+00:00",
+      "task_name": "ehr_query",
+      "context_summary": {
+        "department": "cardiology",
+        "dataset": "mimic-iv",
+        "run": 2
+      },
+      "metrics": {
+        "accuracy": 0.71,
+        "execution_success": 0.8
+      },
+      "accepted": true
+    },
+    {
+      "node_id": "agent_v2",
+      "parent_id": "agent_v1",
+      "timestamp": "2026-03-27T00:21:04.554963+00:00",
+      "task_name": "ehr_query",
+      "context_summary": {
+        "department": "cardiology",
+        "dataset": "mimic-iv",
+        "run": 3
+      },
+      "metrics": {
+        "accuracy": 0.75,
+        "execution_success": 0.85
+      },
+      "accepted": true
+    },
+    {
+      "node_id": "agent_v1b",
+      "parent_id": "agent_v0",
+      "timestamp": "2026-03-27T00:21:04.554963+00:00",
+      "task_name": "ehr_query",
+      "context_summary": {
+        "department": "neurology",
+        "dataset": "mimic-iv",
+        "run": 2
+      },
+      "metrics": {
+        "accuracy": 0.58,
+        "execution_success": 0.65
+      },
+      "accepted": false
+    },
+    {
+      "node_id": "agent_v3",
+      "parent_id": "agent_v2",
+      "timestamp": "2026-03-27T00:21:04.554963+00:00",
+      "task_name": "ehr_query",
+      "context_summary": {
+        "department": "cardiology",
+        "dataset": "mimic-iv",
+        "run": 4
+      },
+      "metrics": {
+        "accuracy": 0.78,
+        "execution_success": 0.88
+      },
+      "accepted": true
+    }
+  ],
+  "edges": [
+    {
+      "edge_id": "e_v0_v1",
+      "parent_id": "agent_v0",
+      "child_id": "agent_v1",
+      "descriptor": {
+        "mod_types": [
+          "prompt_template_change",
+          "verifier_change",
+          "schema_linking_change"
+        ],
+        "modules_changed": [
+          "prompts"
+        ],
+        "scope": "localized",
+        "rationale": "Added chain-of-thought and schema verification to prompt",
+        "diff_stats": {
+          "lines_added": 2,
+          "lines_removed": 0,
+          "files_changed": 1
+        }
+      },
+      "evaluation_context": {
+        "dataset": "mimic-iv",
+        "split": "dev"
+      },
+      "performance_delta": {
+        "accuracy": 0.09,
+        "execution_success": 0.1
+      }
+    },
+    {
+      "edge_id": "e_v1_v2",
+      "parent_id": "agent_v1",
+      "child_id": "agent_v2",
+      "descriptor": {
+        "mod_types": [
+          "retrieval_change"
+        ],
+        "modules_changed": [
+          "retrieval"
+        ],
+        "scope": "localized",
+        "rationale": "Increased top-k from 3 to 5 and added reranking step",
+        "diff_stats": {
+          "lines_added": 2,
+          "lines_removed": 1,
+          "files_changed": 1
+        }
+      },
+      "evaluation_context": {
+        "dataset": "mimic-iv",
+        "split": "dev"
+      },
+      "performance_delta": {
+        "accuracy": 0.04,
+        "execution_success": 0.05
+      }
+    },
+    {
+      "edge_id": "e_v0_v1b",
+      "parent_id": "agent_v0",
+      "child_id": "agent_v1b",
+      "descriptor": {
+        "mod_types": [
+          "tool_selection_change",
+          "schema_linking_change"
+        ],
+        "modules_changed": [
+          "tools"
+        ],
+        "scope": "localized",
+        "rationale": "Routed schema-related queries to schema_inspector tool",
+        "diff_stats": {
+          "lines_added": 2,
+          "lines_removed": 0,
+          "files_changed": 1
+        }
+      },
+      "evaluation_context": {
+        "dataset": "mimic-iv",
+        "split": "dev"
+      },
+      "performance_delta": {
+        "accuracy": -0.04,
+        "execution_success": -0.05
+      }
+    },
+    {
+      "edge_id": "e_v2_v3",
+      "parent_id": "agent_v2",
+      "child_id": "agent_v3",
+      "descriptor": {
+        "mod_types": [
+          "schema_linking_change"
+        ],
+        "modules_changed": [
+          "schema"
+        ],
+        "scope": "localized",
+        "rationale": "Schema linker now scores relevance and filters low-scoring tables",
+        "diff_stats": {
+          "lines_added": 3,
+          "lines_removed": 1,
+          "files_changed": 1
+        }
+      },
+      "evaluation_context": {
+        "dataset": "mimic-iv",
+        "split": "dev"
+      },
+      "performance_delta": {
+        "accuracy": 0.03,
+        "execution_success": 0.03
+      }
+    }
+  ]
+}
