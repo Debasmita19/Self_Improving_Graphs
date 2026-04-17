@@ -1,1 +1,5 @@
 networkx>=3.0
+numpy>=1.24,<2.0
+alibi-detect>=0.12
+sentence-transformers>=2.2
+torch>=2.0
